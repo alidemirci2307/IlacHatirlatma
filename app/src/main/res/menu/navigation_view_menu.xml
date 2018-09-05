@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/home48"
+            android:title="Ana Sayfa" />
+        <item
+            android:id="@+id/alarm"
+            android:icon="@drawable/time48"
+            android:title="Alarmlar" />
+        <item
+            android:id="@+id/drug"
+            android:icon="@drawable/drug48"
+            android:title="İlaçlar" />
+        <item
+            android:id="@+id/medical"
+            android:icon="@drawable/medical48"
+            android:title="Hastalık" />
+        <item
+            android:id="@+id/statistics"
+            android:icon="@drawable/statistics48"
+            android:title="İstatistikler" />
+    </group>
+</menu>
