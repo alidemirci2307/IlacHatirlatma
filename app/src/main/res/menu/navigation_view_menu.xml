@@ -2,24 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/home"
+            android:id="@+id/item_home"
             android:icon="@drawable/home48"
+            android:checkable="true"
             android:title="Ana Sayfa" />
         <item
-            android:id="@+id/alarm"
+            android:id="@+id/item_alarm"
             android:icon="@drawable/time48"
+            android:checkable="true"
             android:title="Alarmlar" />
         <item
-            android:id="@+id/drug"
+            android:id="@+id/item_drug"
             android:icon="@drawable/drug48"
+            android:checkable="true"
             android:title="İlaçlar" />
         <item
-            android:id="@+id/medical"
+            android:id="@+id/item_medical"
             android:icon="@drawable/medical48"
+            android:checkable="true"
             android:title="Hastalık" />
         <item
-            android:id="@+id/statistics"
+            android:id="@+id/item_statistics"
             android:icon="@drawable/statistics48"
+            android:checkable="true"
             android:title="İstatistikler" />
     </group>
 </menu>
