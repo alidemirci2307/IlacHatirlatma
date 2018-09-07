@@ -1,8 +1,6 @@
 package com.ilac.ilachatirlatma;
 
-import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,16 +8,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
+import es.dmoral.toasty.Toasty;
 
-    EditText editTextUserName, editTextPassword;
-    TextInputLayout layoutTextInputUserName, layoutTextInputPassword;
-    DrugDatabase drugDatabase;
+public class SignUpActivity extends AppCompatActivity {
+
+    EditText editTextUserName, editTextPassword, editTextNameSurname;
+    TextInputLayout layoutTextInputUserName, layoutTextInputPassword, layoutTextInputNameSurname;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
         tanimlamalar();
 
     }
@@ -27,10 +26,10 @@ public class LoginActivity extends AppCompatActivity {
     private void tanimlamalar() {
         editTextUserName = findViewById(R.id.editTextUserName);
         editTextPassword = findViewById(R.id.editTextPassword);
+        editTextNameSurname = findViewById(R.id.editTextNameSurname);
         layoutTextInputUserName = findViewById(R.id.layoutTextInputUserName);
         layoutTextInputPassword = findViewById(R.id.layoutTextInputPassword);
-        drugDatabase = new DrugDatabase(this);
-        
+        layoutTextInputNameSurname = findViewById(R.id.layoutTextInputNameSurname);
     }
 
     private boolean validateText(String text, TextInputLayout textInputLayout){
@@ -48,15 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void login(View view){
-        if(validateText(editTextUserName.getText().toString(), layoutTextInputUserName) && validateText(editTextPassword.getText().toString(),layoutTextInputPassword)){
-            Toast.makeText(this,"Başarılı",Toast.LENGTH_SHORT);
-        }
-    }
-
     public void signUp(View view){
-        Intent intent = new Intent();
-        intent.setClass(this,SignUpActivity.class);
-        startActivity(intent);
+        if(validateText(editTextUserName.getText().toString(), layoutTextInputUserName) &&
+                validateText(editTextPassword.getText().toString(),layoutTextInputPassword) &&
+                validateText(editTextNameSurname.getText().toString(),layoutTextInputNameSurname)){
+            Toasty.success(this, "Başarı ile kayıt oldunuz!", Toast.LENGTH_SHORT, true).show();
+        }
     }
 }
