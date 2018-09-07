@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ilac.ilachatirlatma.pojos.User;
+
+import es.dmoral.toasty.Toasty;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText editTextUserName, editTextPassword;
@@ -30,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         layoutTextInputUserName = findViewById(R.id.layoutTextInputUserName);
         layoutTextInputPassword = findViewById(R.id.layoutTextInputPassword);
         drugDatabase = new DrugDatabase(this);
-        
+
     }
 
     private boolean validateText(String text, TextInputLayout textInputLayout){
@@ -50,12 +54,24 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view){
         if(validateText(editTextUserName.getText().toString(), layoutTextInputUserName) && validateText(editTextPassword.getText().toString(),layoutTextInputPassword)){
-            Toast.makeText(this,"Başarılı",Toast.LENGTH_SHORT);
+            User user = drugDatabase.logIn(editTextUserName.getText().toString().trim(), editTextPassword.getText().toString());
+            if(user != null){
+                Toasty.success(this, "Başarı ile giriş yaptınız!", Toast.LENGTH_SHORT, true).show();
+                Intent intent = new Intent();
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.setClass(getApplicationContext(),HomeActivity.class);
+                intent.putExtra("user",user);
+                startActivity(intent);
+            }else{
+                Toasty.error(this, "Kullanıcı adı ya da şifre hatalıdır!", Toast.LENGTH_SHORT, true).show();
+            }
+
         }
     }
 
     public void signUp(View view){
         Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.setClass(this,SignUpActivity.class);
         startActivity(intent);
     }

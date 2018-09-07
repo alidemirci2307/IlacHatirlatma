@@ -11,24 +11,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.ilac.ilachatirlatma.pojos.User;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     Toolbar toolbar; // toolbarı nesnesini oluşturduk
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    TextView textViewBaslik;
+    TextView textViewBaslik,textViewUserName,textViewNameSurname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         tanimlamalar(); // gerekli tanımlamaları yapıyoruz
-
     }
 
     private void tanimlamalar() {
+        User user = (User) getIntent().getSerializableExtra("user"); //LoginActivity'den alınan bilgi
+
         // Toolbar Ayarları
         toolbar = findViewById(R.id.toolbar); // Gerekli tanımlamalar yaptık
-        toolbar.setTitle("İlaç Uygulaması");
+        toolbar.setTitle(user.getNameSurname());
+        toolbar.setSubtitle(user.getUserName());
         // -- Toolbar ayarı
 
         //DrawerLayout Ayarları
@@ -47,6 +51,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //TextView
         textViewBaslik = findViewById(R.id.textViewDeneme);
         //-TextView
+
+
+
+
     }
 
     @Override
