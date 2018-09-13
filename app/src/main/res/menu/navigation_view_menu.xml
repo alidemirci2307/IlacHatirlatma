@@ -26,5 +26,10 @@
             android:icon="@drawable/statistics48"
             android:checkable="true"
             android:title="İstatistikler" />
+        <item
+            android:id="@+id/item_logOut"
+            android:icon="@drawable/logout48"
+            android:checkable="true"
+            android:title="Çıkış Yap" />
     </group>
 </menu>

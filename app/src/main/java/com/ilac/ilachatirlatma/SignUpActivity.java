@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ilac.ilachatirlatma.controller.UserDAO;
 import com.ilac.ilachatirlatma.pojos.User;
 
 import es.dmoral.toasty.Toasty;
@@ -17,6 +18,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText editTextUserName, editTextPassword, editTextNameSurname;
     TextInputLayout layoutTextInputUserName, layoutTextInputPassword, layoutTextInputNameSurname;
     DrugDatabase drugDatabase;
+    UserDAO userDAO;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
         layoutTextInputPassword = findViewById(R.id.layoutTextInputPassword);
         layoutTextInputNameSurname = findViewById(R.id.layoutTextInputNameSurname);
         drugDatabase = new DrugDatabase(getApplicationContext());
+        userDAO = new UserDAO(drugDatabase);
     }
 
     private boolean validateText(String text, TextInputLayout textInputLayout){
@@ -55,8 +58,9 @@ public class SignUpActivity extends AppCompatActivity {
         if(validateText(editTextUserName.getText().toString(), layoutTextInputUserName) &&
                 validateText(editTextPassword.getText().toString(),layoutTextInputPassword) &&
                 validateText(editTextNameSurname.getText().toString(),layoutTextInputNameSurname)){
-            long userId = drugDatabase.createUser(new User(editTextUserName.getText().toString().trim(), editTextPassword.getText().toString(), editTextNameSurname.getText().toString()));
+            long userId = userDAO.insertUser(new User(editTextUserName.getText().toString().trim(), editTextPassword.getText().toString(), editTextNameSurname.getText().toString()));
             Toasty.success(this, "Başarı ile kayıt oldunuz! Id : "+userId, Toast.LENGTH_SHORT, true).show();
+            finish();
         }
     }
 

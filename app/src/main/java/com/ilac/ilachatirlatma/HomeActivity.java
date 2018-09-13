@@ -1,5 +1,6 @@
 package com.ilac.ilachatirlatma;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.ilac.ilachatirlatma.controller.DiseaseDAO;
 import com.ilac.ilachatirlatma.pojos.User;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -19,6 +21,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     TextView textViewBaslik,textViewUserName,textViewNameSurname;
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +30,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void tanimlamalar() {
-        User user = (User) getIntent().getSerializableExtra("user"); //LoginActivity'den alınan bilgi
+        user = (User) getIntent().getSerializableExtra("user"); //LoginActivity'den alınan bilgi
 
         // Toolbar Ayarları
         toolbar = findViewById(R.id.toolbar); // Gerekli tanımlamalar yaptık
@@ -62,8 +65,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         String itemAdi = (String) item.getTitle();
         textViewBaslik.setText(itemAdi);
         navigationViewClose();
+        Intent intent;
         switch (item.getItemId()){
             case R.id.item_home :
+                intent = new Intent(this,DiseaseActivity.class);
+                intent.putExtra("user",user);
+                startActivity(intent);
                 break;
             case R.id.item_alarm :
                 break;
@@ -72,6 +79,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.item_medical :
                 break;
             case R.id.item_statistics :
+                break;
+            case R.id.item_logOut :
+                intent = new Intent();
+                intent.setClass(getApplicationContext(),LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
                 break;
         }
         return true;

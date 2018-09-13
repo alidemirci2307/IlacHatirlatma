@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ilac.ilachatirlatma.controller.UserDAO;
 import com.ilac.ilachatirlatma.pojos.User;
 
 import es.dmoral.toasty.Toasty;
@@ -19,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText editTextUserName, editTextPassword;
     TextInputLayout layoutTextInputUserName, layoutTextInputPassword;
     DrugDatabase drugDatabase;
+    UserDAO userDAO;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         layoutTextInputUserName = findViewById(R.id.layoutTextInputUserName);
         layoutTextInputPassword = findViewById(R.id.layoutTextInputPassword);
         drugDatabase = new DrugDatabase(this);
+        userDAO = new UserDAO(drugDatabase);
 
     }
 
@@ -54,14 +58,15 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view){
         if(validateText(editTextUserName.getText().toString(), layoutTextInputUserName) && validateText(editTextPassword.getText().toString(),layoutTextInputPassword)){
-            User user = drugDatabase.logIn(editTextUserName.getText().toString().trim(), editTextPassword.getText().toString());
+            User user = userDAO.logIn(editTextUserName.getText().toString().trim(), editTextPassword.getText().toString());
             if(user != null){
-                Toasty.success(this, "Başarı ile giriş yaptınız!", Toast.LENGTH_SHORT, true).show();
+                Toasty.success(this, "Başarıyla giriş yaptınız!", Toast.LENGTH_SHORT, true).show();
                 Intent intent = new Intent();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.setClass(getApplicationContext(),HomeActivity.class);
                 intent.putExtra("user",user);
                 startActivity(intent);
+                finish();
             }else{
                 Toasty.error(this, "Kullanıcı adı ya da şifre hatalıdır!", Toast.LENGTH_SHORT, true).show();
             }
