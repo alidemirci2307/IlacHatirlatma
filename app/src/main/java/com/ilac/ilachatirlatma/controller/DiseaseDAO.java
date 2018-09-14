@@ -29,7 +29,9 @@ public class DiseaseDAO {
     //-- Yaygın Kullanılan Tablo Alan Adları
 
     // Disease Tablosu - Sütun Adları
+    private static final String KEY_USER_ID = "userId";
     private static final String KEY_DISEASE_NAME = "diseaseName";
+    private static final String KEY_DISEASE_VALUE = "diseaseValue";
     //-- Disease Tablosu - Sütun Adları
 
 
@@ -41,6 +43,8 @@ public class DiseaseDAO {
         SQLiteDatabase db = drugDatabase.getWritableDatabase(); // Veritabanından yazma izni aldık
         ContentValues values = new ContentValues(); //Yazacağımız değerleri atacağımız nesneyi oluşturduk
         values.put(KEY_DISEASE_NAME, disease.getDiseaseName()); // değerleri atıyoruz
+        values.put(KEY_USER_ID, disease.getUserId()); // değerleri atıyoruz
+        values.put(KEY_DISEASE_VALUE, disease.getDiseaseValue()); // değerleri atıyoruz
         values.put(KEY_CREATED_AT, getDateTime());
         // Eklediğimiz verinin id'sini çekiyoruz
         long diseaseId = db.insert(TABLE_DISEASE, null, values); // veritabanının user tablosuna veriyi ekliyoruz ve eklenen değerin Id bilgisini çekiyoruz
@@ -74,8 +78,33 @@ public class DiseaseDAO {
         if (c.moveToFirst()) {
             do {
                 Disease disease = new Disease();
-                disease.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+                disease.setDiseaseId(c.getInt((c.getColumnIndex(KEY_ID))));
+                disease.setDiseaseId(c.getInt((c.getColumnIndex(KEY_USER_ID))));
                 disease.setDiseaseName((c.getString(c.getColumnIndex(KEY_DISEASE_NAME))));
+                disease.setDiseaseName((c.getString(c.getColumnIndex(KEY_DISEASE_VALUE))));
+                disease.setCreatedDate(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+                diseaseArrayList.add(disease);
+            } while (c.moveToNext());
+        }
+        return diseaseArrayList;
+    }
+
+    public List<Disease> getAllDiseasesById(int userId) {
+        List<Disease> diseaseArrayList = new ArrayList<Disease>();
+        String selectQuery = "SELECT  * FROM " + TABLE_DISEASE + " WHERE " + KEY_USER_ID + " = \"" + userId + "\" ORDER BY " + KEY_ID + " DESC";
+
+        Log.e("SQL : ", selectQuery);
+
+        SQLiteDatabase db = drugDatabase.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                Disease disease = new Disease();
+                disease.setDiseaseId(c.getInt((c.getColumnIndex(KEY_ID))));
+                disease.setDiseaseId(c.getInt((c.getColumnIndex(KEY_USER_ID))));
+                disease.setDiseaseName((c.getString(c.getColumnIndex(KEY_DISEASE_NAME))));
+                disease.setDiseaseValue((c.getString(c.getColumnIndex(KEY_DISEASE_VALUE))));
                 disease.setCreatedDate(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
                 diseaseArrayList.add(disease);
             } while (c.moveToNext());
@@ -95,7 +124,7 @@ public class DiseaseDAO {
 
         if (c != null){
             if(c.moveToFirst()){ // Eğer bir kayıt bulduysa (ilk kayıta gider bakar var mı diye)
-                Disease disease= new Disease(c.getInt(c.getColumnIndex(KEY_ID)), c.getString(c.getColumnIndex(KEY_DISEASE_NAME)), c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+                Disease disease = new Disease(c.getInt(c.getColumnIndex(KEY_ID)), c.getInt(c.getColumnIndex(KEY_USER_ID)), c.getString(c.getColumnIndex(KEY_DISEASE_NAME)), c.getString(c.getColumnIndex(KEY_DISEASE_VALUE)), c.getString(c.getColumnIndex(KEY_CREATED_AT)));
                 closeDB();
                 return disease; // Kullanıcımızı döndürüyoruz
             }else{
@@ -115,7 +144,7 @@ public class DiseaseDAO {
         values.put(KEY_DISEASE_NAME, disease.getDiseaseName());
         // updating row
         return db.update(TABLE_DISEASE, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(disease.getId()) });
+                new String[]{String.valueOf(disease.getDiseaseId())});
     }
 
     public void deleteDisease(long diseaseId) {

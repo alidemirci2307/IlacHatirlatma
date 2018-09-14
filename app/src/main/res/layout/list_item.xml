@@ -69,7 +69,7 @@
             app:srcCompat="@drawable/trash48" />
 
         <TextView
-            android:id="@+id/textViewDate"
+            android:id="@+id/textViewDiseaseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="13.09.2018"
@@ -91,7 +91,7 @@
             app:srcCompat="@drawable/arrow32" />
 
         <TextView
-            android:id="@+id/textViewDescription"
+            android:id="@+id/textViewDiseaseValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

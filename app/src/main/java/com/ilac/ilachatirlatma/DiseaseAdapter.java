@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ilac.ilachatirlatma.controller.DiseaseDAO;
-import com.ilac.ilachatirlatma.model.DiseaseAll;
 import com.ilac.ilachatirlatma.pojos.Disease;
 
 import java.util.ArrayList;
@@ -17,14 +16,14 @@ import java.util.ArrayList;
 public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHolder> {
 
 
-    ArrayList<DiseaseAll> diseaseAllArrayList;
+    ArrayList<Disease> diseaseArrayList;
     LayoutInflater inflater;
     DiseaseDAO diseaseDAO;
     DrugDatabase drugDatabase;
 
     public DiseaseAdapter(Context context, ArrayList diseaseAllArrayList) {
         inflater = LayoutInflater.from(context);
-        this.diseaseAllArrayList = diseaseAllArrayList;
+        this.diseaseArrayList = diseaseAllArrayList;
         drugDatabase = new DrugDatabase(context);
         diseaseDAO = new DiseaseDAO(drugDatabase);
     }
@@ -38,30 +37,34 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        DiseaseAll diseaseAll = diseaseAllArrayList.get(position);
-        holder.setData(diseaseAll, position);
+        Disease disease = diseaseArrayList.get(position);
+        holder.setData(disease, position);
     }
 
     @Override
     public int getItemCount() {
-        return diseaseAllArrayList.size();
+        return diseaseArrayList.size();
     }
 
     class MyViewHolder extends  RecyclerView.ViewHolder{
-        TextView textViewDiseaseName;
+        TextView textViewDiseaseName, textViewDiseaseValue, textViewDiseaseDate;
         ImageView imageViewUpdate, imageViewDelete;
         private int clickedItemPosition = 0;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             textViewDiseaseName = itemView.findViewById(R.id.textViewDiseaseName);
+            textViewDiseaseValue = itemView.findViewById(R.id.textViewDiseaseValue);
+            textViewDiseaseDate = itemView.findViewById(R.id.textViewDiseaseDate);
             imageViewUpdate = itemView.findViewById(R.id.imageViewUpdate);
             imageViewDelete = itemView.findViewById(R.id.imageViewDelete);
         }
 
-        public void setData(DiseaseAll data, final int position) {
+        public void setData(Disease data, final int position) {
             this.clickedItemPosition = position;
-            this.textViewDiseaseName.setText(data.toString());
+            this.textViewDiseaseName.setText(data.getDiseaseName());
+            this.textViewDiseaseValue.setText(data.getDiseaseValue());
+            this.textViewDiseaseDate.setText(data.getCreatedDate());
             this.imageViewUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -79,10 +82,10 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHo
 
         private void deleteItem(int position){
 
-            diseaseDAO.deleteDisease(diseaseAllArrayList.get(position).getDisease().getId());
+            diseaseDAO.deleteDisease(diseaseArrayList.get(position).getDiseaseId());
             notifyItemRemoved(position);
-            diseaseAllArrayList.remove(position);
-            notifyItemRangeChanged(position, diseaseAllArrayList.size());
+            diseaseArrayList.remove(position);
+            notifyItemRangeChanged(position, diseaseArrayList.size());
         }
     }
 }

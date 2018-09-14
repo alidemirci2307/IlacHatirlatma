@@ -13,15 +13,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ilac.ilachatirlatma.controller.DiseaseDAO;
-import com.ilac.ilachatirlatma.controller.DiseaseResultDAO;
-import com.ilac.ilachatirlatma.controller.DiseaseUserDAO;
-import com.ilac.ilachatirlatma.model.DiseaseAll;
 import com.ilac.ilachatirlatma.pojos.Disease;
-import com.ilac.ilachatirlatma.pojos.DiseaseResult;
-import com.ilac.ilachatirlatma.pojos.DiseaseUser;
 import com.ilac.ilachatirlatma.pojos.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 
@@ -29,10 +27,8 @@ public class DiseaseActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     DrugDatabase drugDatabase;
-    ArrayList<DiseaseAll> diseaseAllArrayList = new ArrayList<DiseaseAll>();
+    ArrayList<Disease> diseaseArrayList = new ArrayList<Disease>();
     DiseaseDAO diseaseDAO;
-    DiseaseUserDAO diseaseUserDAO;
-    DiseaseResultDAO diseaseResultDAO;
     FloatingActionButton floatingActionButton;
     User user;
 
@@ -65,13 +61,11 @@ public class DiseaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(validateText(editTextDiseaseName.getText().toString(),textInputLayoutDiseaseName) && validateText(editTextDiseaseResultValue.getText().toString(),textInputLayoutDiseaseResultValue)){
-                    long id = diseaseDAO.insertDisease(new Disease(editTextDiseaseName.getText().toString()));
-                    long diseaseUserId = diseaseUserDAO.insertDiseaseUser(new DiseaseUser((int) id,user.getUserId()));
-                    long diseaseResultId = diseaseResultDAO.insertDiseaseUser(new DiseaseResult((int) diseaseUserId, editTextDiseaseResultValue.getText().toString()));
-                    Toasty.success(getApplicationContext(), "Başarıyla eklenmiştir", Toast.LENGTH_SHORT, true).show();
-                    diseaseAllArrayList.clear();
-                    diseaseAllArrayList.addAll(diseaseDAO.getAllDiseases());
-                    DiseaseAdapter diseaseAdapter = new DiseaseAdapter(DiseaseActivity.this, diseaseAllArrayList);
+                    long id = diseaseDAO.insertDisease(new Disease(user.getUserId(), editTextDiseaseName.getText().toString(), editTextDiseaseResultValue.getText().toString(), getDateTime()));
+                    Toasty.success(getApplicationContext(), "Başarıyla eklenmiştir. Id : " + id, Toast.LENGTH_SHORT, true).show();
+                    diseaseArrayList.clear();
+                    diseaseArrayList.addAll(diseaseDAO.getAllDiseasesById(user.getUserId()));
+                    DiseaseAdapter diseaseAdapter = new DiseaseAdapter(DiseaseActivity.this, diseaseArrayList);
                     recyclerView.setAdapter(diseaseAdapter);
                     dialog.dismiss();
                     //recyclerView.refreshDrawableState();
@@ -88,6 +82,12 @@ public class DiseaseActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
     public boolean validateText(String text, TextInputLayout textInputLayout){
         if(text != null){
             if(text.trim().length() <  4){
@@ -109,8 +109,7 @@ public class DiseaseActivity extends AppCompatActivity {
         floatingActionButton = findViewById(R.id.floatingActionButtonInsertDisease);
         drugDatabase = new DrugDatabase(this);
         diseaseDAO = new DiseaseDAO(drugDatabase);
-        diseaseResultDAO = new DiseaseResultDAO(drugDatabase);
-        diseaseUserDAO = new DiseaseUserDAO(drugDatabase);
+
 
 
         /*
@@ -119,15 +118,10 @@ public class DiseaseActivity extends AppCompatActivity {
         diseaseDAO.insertDisease(new Disease("Kanser"));
         diseaseDAO.insertDisease(new Disease("Çok hasta"));
         diseaseDAO.insertDisease(new Disease("Ölecek"));*/
-        ArrayList<DiseaseResult> diseaseResultArrayList = new ArrayList<>();
-        diseaseResultArrayList.addAll(diseaseResultDAO.getAllDiseaseResultById(user.getUserId()));
+        ArrayList<Disease> diseaseResultArrayList = new ArrayList<>();
 
-        for (int i = 0; i < diseaseResultArrayList.size(); i++) {
-            Disease disease = diseaseDAO.getDisease(diseaseResultArrayList.get(i).get)
-            diseaseAllArrayList.add(new DiseaseAll(user,))
-        }
-        diseaseAllArrayList.addAll(diseaseDAO.getAllDiseases());
-        DiseaseAdapter diseaseAdapter = new DiseaseAdapter(this, diseaseAllArrayList);
+        diseaseArrayList.addAll(diseaseDAO.getAllDiseasesById(user.getUserId()));
+        DiseaseAdapter diseaseAdapter = new DiseaseAdapter(this, diseaseArrayList);
         recyclerView.setAdapter(diseaseAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

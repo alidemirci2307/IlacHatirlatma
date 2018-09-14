@@ -5,41 +5,44 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Disease {
-    private int id;
+    private int diseaseId;
+    private int userId;
     private String diseaseName;
+    private String diseaseValue;
     private String createdDate;
 
     public Disease() {
     }
 
-    public Disease(int id, String diseaseName, String createdDate) {
-        this.id = id;
+    public Disease(int diseaseId, int userId, String diseaseName, String diseaseValue, String createdDate) {
+        this.diseaseId = diseaseId;
+        this.userId = userId;
         this.diseaseName = diseaseName;
+        this.diseaseValue = diseaseValue;
         this.createdDate = createdDate;
     }
 
-    public Disease(int id, String diseaseName) {
-        this.id = id;
+    public Disease(int userId, String diseaseName, String diseaseValue, String createdDate) {
+        this.userId = userId;
         this.diseaseName = diseaseName;
-        this.createdDate = getDateTime();
+        this.diseaseValue = diseaseValue;
+        this.createdDate = createdDate;
     }
 
-    public Disease(String diseaseName) {
-        this.diseaseName = diseaseName;
-        this.createdDate = getDateTime();
+    public int getDiseaseId() {
+        return diseaseId;
     }
 
-    @Override
-    public String toString() {
-        return diseaseName;
+    public void setDiseaseId(int diseaseId) {
+        this.diseaseId = diseaseId;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getDiseaseName() {
@@ -50,8 +53,20 @@ public class Disease {
         this.diseaseName = diseaseName;
     }
 
+    public String getDiseaseValue() {
+        return diseaseValue;
+    }
+
+    public void setDiseaseValue(String diseaseValue) {
+        this.diseaseValue = diseaseValue;
+    }
+
     public String getCreatedDate() {
         return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
     private String getDateTime() {
@@ -61,7 +76,4 @@ public class Disease {
         return dateFormat.format(date);
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
 }
