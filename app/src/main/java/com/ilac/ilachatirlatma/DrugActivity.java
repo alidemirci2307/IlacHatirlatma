@@ -71,7 +71,7 @@ public class DrugActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showInputDialog();
-                Toasty.info(getApplicationContext(),"Tıkladın").show();
+               // Toasty.info(getApplicationContext(),"Tıkladın").show();
             }
         });
 
@@ -169,7 +169,7 @@ public class DrugActivity extends AppCompatActivity {
         buttonRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validateText(editTextDrugName.getText().toString(),layoutTextInputDrugName,4) && validateText(editTextDrugDose.getText().toString(),layoutTextInputDrugDose,1)){
+                if(validateText(editTextDrugName.getText().toString(),layoutTextInputDrugName,3) && validateText(editTextDrugDose.getText().toString(),layoutTextInputDrugDose,1)){
 
                     if(checkbox1.isChecked() || checkbox2.isChecked() || checkbox3.isChecked()){
                         String frequence = "";
@@ -192,14 +192,14 @@ public class DrugActivity extends AppCompatActivity {
                         }
 
                         long id = drugDAO.insertDrug(new Drug(user.getUserId(), editTextDrugName.getText().toString(), editTextDrugDose.getText().toString() +" "+String.valueOf(spinnerDrugDoseType.getSelectedItem()), frequence,getDateTime()));
-                        Toasty.success(getApplicationContext(), "Başarıyla eklenmiştir. 1 ", Toast.LENGTH_SHORT, true).show();
+                        Toasty.success(getApplicationContext(), "Başarıyla eklenmiştir.", Toast.LENGTH_SHORT, true).show();
                     }else if(editTextDrugFrequence.getText().toString().length() > 0 && editTextDrugTime.getText().toString().length() > 3){
                         String frequence = editTextDrugFrequence.getText().toString().trim() + " " + editTextDrugTime.getText().toString().trim();
                         long id = drugDAO.insertDrug(new Drug(user.getUserId(), editTextDrugName.getText().toString(), editTextDrugDose.getText().toString() +" "+String.valueOf(spinnerDrugDoseType.getSelectedItem()), frequence,getDateTime()));
-                        Toasty.success(getApplicationContext(), "Başarıyla eklenmiştir. 2 ", Toast.LENGTH_SHORT, true).show();
+                        Toasty.success(getApplicationContext(), "Başarıyla eklenmiştir.", Toast.LENGTH_SHORT, true).show();
                     }else{
                         long id = drugDAO.insertDrug(new Drug(user.getUserId(), editTextDrugName.getText().toString(), editTextDrugDose.getText().toString() +" "+String.valueOf(spinnerDrugDoseType.getSelectedItem()), "",getDateTime()));
-                        Toasty.success(getApplicationContext(), "Başarıyla eklenmiştir. 3 "+checkbox1.isSelected() +" " + checkbox2.isSelected() + " " + checkbox3.isSelected(), Toast.LENGTH_SHORT, true).show();
+                        Toasty.success(getApplicationContext(), "Başarıyla eklenmiştir."+checkbox1.isSelected() +" " + checkbox2.isSelected() + " " + checkbox3.isSelected(), Toast.LENGTH_SHORT, true).show();
                     }
 
 

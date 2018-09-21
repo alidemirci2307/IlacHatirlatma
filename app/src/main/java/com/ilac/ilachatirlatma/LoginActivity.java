@@ -1,17 +1,27 @@
 package com.ilac.ilachatirlatma;
 
+import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ilac.ilachatirlatma.controller.UserDAO;
 import com.ilac.ilachatirlatma.pojos.User;
+
+import java.util.Calendar;
 
 import es.dmoral.toasty.Toasty;
 
@@ -27,10 +37,14 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        tanimlamalar();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            tanimlamalar();
+        }
 
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void tanimlamalar() {
         editTextUserName = findViewById(R.id.editTextUserName);
         editTextPassword = findViewById(R.id.editTextPassword);
@@ -40,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         userDAO = new UserDAO(drugDatabase);
 
     }
+
+
 
     private boolean validateText(String text, TextInputLayout textInputLayout){
         if(text != null){
@@ -55,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
     }
+
+
 
     public void login(View view){
         if(validateText(editTextUserName.getText().toString(), layoutTextInputUserName) && validateText(editTextPassword.getText().toString(),layoutTextInputPassword)){

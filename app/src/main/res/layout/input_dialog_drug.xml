@@ -45,7 +45,8 @@
             android:id="@+id/editTextDrugDose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Değer Giriniz" />
+            android:hint="Doz Giriniz"
+            android:inputType="numberSigned" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -189,15 +190,15 @@
         <EditText
             android:id="@+id/editTextDrugFrequence"
             android:layout_width="match_parent"
-            android:inputType="number"
             android:layout_height="wrap_content"
-            android:hint="Değer Giriniz(saat) (Örnek 8)" />
+            android:hint="Değer Giriniz(saat) (Örnek 8)"
+            android:inputType="numberSigned" />
 
     </android.support.design.widget.TextInputLayout>
 
     <EditText
         android:id="@+id/editTextDrugTime"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -205,7 +206,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Günün Başl. saatini giriniz (Örnek : 07:30)"
+        android:hint="Baş. Saati Girin (Örnek 12:24)"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

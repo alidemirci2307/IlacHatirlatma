@@ -42,7 +42,7 @@ public class DiseaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showInputDialog();
-                Toasty.info(getApplicationContext(),"Tıkladın").show();
+                //Toasty.info(getApplicationContext(),"Tıkladın").show();
             }
         });
 
@@ -61,9 +61,9 @@ public class DiseaseActivity extends AppCompatActivity {
         buttonRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validateText(editTextDiseaseName.getText().toString(),textInputLayoutDiseaseName) && validateText(editTextDiseaseResultValue.getText().toString(),textInputLayoutDiseaseResultValue)){
+                if(validateText(editTextDiseaseName.getText().toString(),3,textInputLayoutDiseaseName) && validateText(editTextDiseaseResultValue.getText().toString(),1,textInputLayoutDiseaseResultValue)){
                     long id = diseaseDAO.insertDisease(new Disease(user.getUserId(), editTextDiseaseName.getText().toString(), editTextDiseaseResultValue.getText().toString(), getDateTime()));
-                    Toasty.success(getApplicationContext(), "Başarıyla eklenmiştir. Id : " + id, Toast.LENGTH_SHORT, true).show();
+                    Toasty.success(getApplicationContext(), "Başarıyla eklenmiştir.", Toast.LENGTH_SHORT, true).show();
                     diseaseArrayList.clear();
                     diseaseArrayList.addAll(diseaseDAO.getAllDiseasesById(user.getUserId()));
                     DiseaseAdapter diseaseAdapter = new DiseaseAdapter(DiseaseActivity.this, diseaseArrayList);
@@ -89,10 +89,10 @@ public class DiseaseActivity extends AppCompatActivity {
         Date date = new Date();
         return dateFormat.format(date);
     }
-    public boolean validateText(String text, TextInputLayout textInputLayout){
+    public boolean validateText(String text, int length, TextInputLayout textInputLayout){
         if(text != null){
-            if(text.trim().length() <  4){
-                textInputLayout.setError("En az 4 karakter girmelisiniz");
+            if(text.trim().length() <  length){
+                textInputLayout.setError("En az "+length+" karakter girmelisiniz");
                 return false;
             }else{
                 textInputLayout.setErrorEnabled(false);

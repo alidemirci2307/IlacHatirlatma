@@ -243,7 +243,7 @@ public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.MyViewHolder> 
                 @Override
                 public void onClick(View view) {
 
-                    if(validateText(editTextDrugName.getText().toString(),layoutTextInputDrugName,4) && validateText(editTextDrugDose.getText().toString(),layoutTextInputDrugDose,1)){
+                    if(validateText(editTextDrugName.getText().toString(),layoutTextInputDrugName,3) && validateText(editTextDrugDose.getText().toString(),layoutTextInputDrugDose,1)){
 
                         data.setDrugDose(editTextDrugDose.getText().toString().trim());
                         data.setDrugName(editTextDrugName.getText().toString().trim());

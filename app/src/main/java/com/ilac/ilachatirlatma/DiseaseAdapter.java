@@ -118,11 +118,11 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHo
         buttonRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validateText(editTextDiseaseName.getText().toString(),textInputLayoutDiseaseName) && validateText(editTextDiseaseResultValue.getText().toString(),textInputLayoutDiseaseResultValue)){
+                if(validateText(editTextDiseaseName.getText().toString(),3,textInputLayoutDiseaseName) && validateText(editTextDiseaseResultValue.getText().toString(),1,textInputLayoutDiseaseResultValue)){
                     data.setDiseaseName(editTextDiseaseName.getText().toString().trim());
                     data.setDiseaseValue(editTextDiseaseResultValue.getText().toString().trim());
                     long id = diseaseDAO.updateDisease(data);
-                    Toasty.success(context, "Başarıyla güncellenmiştir. Id : " + id, Toast.LENGTH_SHORT, true).show();
+                    Toasty.success(context, "Başarıyla güncellenmiştir.", Toast.LENGTH_SHORT, true).show();
                     //diseaseArrayList.clear();
                     //diseaseArrayList.addAll(diseaseDAO.getAllDiseasesById(user.getUserId()));
                     //DiseaseAdapter diseaseAdapter = new DiseaseAdapter(context, diseaseArrayList);
@@ -149,10 +149,10 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHo
         Date date = new Date();
         return dateFormat.format(date);
     }
-    public boolean validateText(String text, TextInputLayout textInputLayout){
+    public boolean validateText(String text, int length, TextInputLayout textInputLayout){
         if(text != null){
-            if(text.trim().length() <  4){
-                textInputLayout.setError("En az 4 karakter girmelisiniz");
+            if(text.trim().length() <  length){
+                textInputLayout.setError("En az "+length+" karakter girmelisiniz");
                 return false;
             }else{
                 textInputLayout.setErrorEnabled(false);

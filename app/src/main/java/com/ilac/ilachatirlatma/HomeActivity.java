@@ -53,7 +53,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //TextView
         textViewBaslik = findViewById(R.id.textViewDeneme);
+        textViewBaslik.setText("Hoş Geldiniz!\n"+user.getNameSurname());
         //-TextView
+
+
 
 
 
@@ -63,15 +66,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         String itemAdi = (String) item.getTitle();
-        textViewBaslik.setText(itemAdi);
+
         navigationViewClose();
         Intent intent;
         switch (item.getItemId()){
             case R.id.item_home :
-
-                break;
-            case R.id.item_alarm :
-
+                textViewBaslik.setText("Hoş Geldiniz!\n"+user.getNameSurname());
                 break;
             case R.id.item_drug :
                 intent = new Intent(this,DrugActivity.class);
@@ -83,8 +83,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 intent.putExtra("user",user);
                 startActivity(intent);
                 break;
-            case R.id.item_statistics :
-                break;
+
             case R.id.item_logOut :
                 intent = new Intent();
                 intent.setClass(getApplicationContext(),LoginActivity.class);

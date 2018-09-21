@@ -59,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
                 validateText(editTextPassword.getText().toString(),layoutTextInputPassword) &&
                 validateText(editTextNameSurname.getText().toString(),layoutTextInputNameSurname)){
             long userId = userDAO.insertUser(new User(editTextUserName.getText().toString().trim(), editTextPassword.getText().toString(), editTextNameSurname.getText().toString()));
-            Toasty.success(this, "Başarı ile kayıt oldunuz! Id : "+userId, Toast.LENGTH_SHORT, true).show();
+            Toasty.success(this, "Başarı ile kayıt oldunuz! ", Toast.LENGTH_SHORT, true).show();
             finish();
         }
     }
