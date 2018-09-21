@@ -23,7 +23,8 @@
         </activity>
         <activity android:name=".HomeActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".DiseaseActivity"></activity>
+        <activity android:name=".DiseaseActivity" />
+        <activity android:name=".DrugActivity"></activity>
     </application>
 
 </manifest>

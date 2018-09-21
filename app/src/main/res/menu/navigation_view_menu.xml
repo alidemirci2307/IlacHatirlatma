@@ -7,20 +7,20 @@
             android:checkable="true"
             android:title="Ana Sayfa" />
         <item
-            android:id="@+id/item_alarm"
-            android:icon="@drawable/time48"
+            android:id="@+id/item_medical"
+            android:icon="@drawable/medical48"
             android:checkable="true"
-            android:title="Alarmlar" />
+            android:title="Ölçümler" />
         <item
             android:id="@+id/item_drug"
             android:icon="@drawable/drug48"
             android:checkable="true"
-            android:title="İlaçlar" />
+            android:title="İlaçlar ve Alarmlar" />
         <item
-            android:id="@+id/item_medical"
-            android:icon="@drawable/medical48"
+            android:id="@+id/item_alarm"
+            android:icon="@drawable/time48"
             android:checkable="true"
-            android:title="Hastalık" />
+            android:title="Alarmlar" />
         <item
             android:id="@+id/item_statistics"
             android:icon="@drawable/statistics48"

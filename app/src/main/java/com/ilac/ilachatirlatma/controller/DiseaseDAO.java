@@ -102,7 +102,7 @@ public class DiseaseDAO {
             do {
                 Disease disease = new Disease();
                 disease.setDiseaseId(c.getInt((c.getColumnIndex(KEY_ID))));
-                disease.setDiseaseId(c.getInt((c.getColumnIndex(KEY_USER_ID))));
+                disease.setUserId(c.getInt((c.getColumnIndex(KEY_USER_ID))));
                 disease.setDiseaseName((c.getString(c.getColumnIndex(KEY_DISEASE_NAME))));
                 disease.setDiseaseValue((c.getString(c.getColumnIndex(KEY_DISEASE_VALUE))));
                 disease.setCreatedDate(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
@@ -142,13 +142,17 @@ public class DiseaseDAO {
 
         ContentValues values = new ContentValues();
         values.put(KEY_DISEASE_NAME, disease.getDiseaseName());
+        values.put(KEY_DISEASE_VALUE, disease.getDiseaseValue());
         // updating row
         return db.update(TABLE_DISEASE, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(disease.getDiseaseId())});
     }
 
+
+
     public void deleteDisease(long diseaseId) {
         SQLiteDatabase db = drugDatabase.getWritableDatabase();
+        Log.i("deleteDisease : ", String.valueOf(diseaseId));
         db.delete(TABLE_DISEASE, KEY_ID + " = ?",
                 new String[] { String.valueOf(diseaseId) });
     }

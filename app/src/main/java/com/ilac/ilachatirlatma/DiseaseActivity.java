@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,9 +50,9 @@ public class DiseaseActivity extends AppCompatActivity {
 
     private void showInputDialog() {
         final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.input_dialog);
-        final TextInputLayout textInputLayoutDiseaseName = dialog.findViewById(R.id.layoutTextInputDiseaseName);
-        final TextInputLayout textInputLayoutDiseaseResultValue = dialog.findViewById(R.id.layoutTextInputDiseaseResultValue);
+        dialog.setContentView(R.layout.input_dialog_disease);
+        final TextInputLayout textInputLayoutDiseaseName = dialog.findViewById(R.id.layoutTextInputDrugName);
+        final TextInputLayout textInputLayoutDiseaseResultValue = dialog.findViewById(R.id.layoutTextInputDrugDose);
         final EditText editTextDiseaseName = dialog.findViewById(R.id.editTextDiseaseName);
         final EditText editTextDiseaseResultValue = dialog.findViewById(R.id.editTextDiseaseResultValue);
         Button buttonRun = dialog.findViewById(R.id.buttonRun);
@@ -105,13 +106,23 @@ public class DiseaseActivity extends AppCompatActivity {
 
     private void tanimlamalar() {
         user = (User) getIntent().getSerializableExtra("user"); //LoginActivity'den alınan bilgi
+        //Toolbar Ayarı
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setTitle("İlaçlar");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        //--Toolbar ayarı
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButtonInsertDisease);
         drugDatabase = new DrugDatabase(this);
         diseaseDAO = new DiseaseDAO(drugDatabase);
-
-
-
         /*
         diseaseDAO.insertDisease(new Disease("Kızamık"));
         diseaseDAO.insertDisease(new Disease("Grip"));

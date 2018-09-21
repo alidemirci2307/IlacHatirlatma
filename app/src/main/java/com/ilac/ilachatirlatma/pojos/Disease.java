@@ -29,6 +29,14 @@ public class Disease {
         this.createdDate = createdDate;
     }
 
+    public Disease(int diseaseId, String diseaseName, String diseaseValue) {
+        this.diseaseId = diseaseId;
+        this.diseaseName = diseaseName;
+        this.diseaseValue = diseaseValue;
+        this.createdDate = createdDate;
+    }
+
+
     public int getDiseaseId() {
         return diseaseId;
     }

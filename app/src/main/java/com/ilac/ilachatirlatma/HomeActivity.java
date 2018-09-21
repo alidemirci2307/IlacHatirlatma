@@ -68,15 +68,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Intent intent;
         switch (item.getItemId()){
             case R.id.item_home :
-                intent = new Intent(this,DiseaseActivity.class);
+
+                break;
+            case R.id.item_alarm :
+
+                break;
+            case R.id.item_drug :
+                intent = new Intent(this,DrugActivity.class);
                 intent.putExtra("user",user);
                 startActivity(intent);
                 break;
-            case R.id.item_alarm :
-                break;
-            case R.id.item_drug :
-                break;
             case R.id.item_medical :
+                intent = new Intent(this,DiseaseActivity.class);
+                intent.putExtra("user",user);
+                startActivity(intent);
                 break;
             case R.id.item_statistics :
                 break;
